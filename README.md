@@ -1,1 +1,932 @@
-# valentine-2026
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love For You</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-pink: #e91e63;
+            --secondary-pink: #ff4081;
+            --light-pink: #ffc2d1;
+            --dark-red: #5d001e;
+            --nature-green: #2e8b57;
+            --sky-blue: #87ceeb;
+            --gold: #ffd166;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-pink), #ffafcc);
+            color: var(--dark-red);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 1s ease;
+        }
+        
+        /* Page Navigation */
+        .page-nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            color: var(--primary-pink);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+        
+        /* Pages */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: flex;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.93);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--primary-pink);
+            margin: 25px 0 15px;
+        }
+        
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: #333;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .heart-separator {
+            font-size: 2.5rem;
+            color: var(--primary-pink);
+            margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        /* Photo Gallery */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .photo-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease;
+            height: 250px;
+            position: relative;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            font-size: 0.9rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+        
+        /* Love Message Box */
+        .love-message {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            color: white;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+            position: relative;
+        }
+        
+        .love-message h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .message-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        
+        /* Distance Section */
+        .distance-section {
+            background: linear-gradient(45deg, var(--sky-blue), var(--nature-green));
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            color: white;
+            box-shadow: 0 5px 15px rgba(46, 139, 87, 0.3);
+        }
+        
+        .distance-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Memory Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--primary-pink);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin: 20px 0;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Together Stats */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            min-width: 180px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        /* Patience Section */
+        .patience-section {
+            background: linear-gradient(45deg, #a8e6cf, #dcedc1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            color: #2e7d32;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+        }
+        
+        .patience-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Future Dreams Section */
+        .dreams-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .dream-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--primary-pink);
+        }
+        
+        .dream-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dream-icon {
+            font-size: 2.5rem;
+            color: var(--primary-pink);
+            margin-bottom: 15px;
+        }
+        
+        .dream-title {
+            font-weight: 600;
+            color: var(--dark-red);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        /* Natural Looking Section */
+        .natural-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 5px solid var(--nature-green);
+        }
+        
+        .natural-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+            text-align: left;
+        }
+        
+        /* Hearts Animation */
+        .hearts-falling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart-fall {
+            position: absolute;
+            color: var(--primary-pink);
+            font-size: 20px;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        
+        /* Animations */
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            color: var(--dark-red);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 25px;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .photo-item {
+                height: 200px;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .stats-container {
+                gap: 15px;
+            }
+            
+            .stat-box {
+                min-width: 140px;
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2.2rem;
+            }
+            
+            .dreams-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-nav {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-box {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="page-nav">
+        <button class="nav-btn" id="page1Btn" title="Love Message">
+            <i class="fas fa-heart"></i>
+        </button>
+        <button class="nav-btn" id="page2Btn" title="Our Journey">
+            <i class="fas fa-history"></i>
+        </button>
+    </div>
+    
+    <!-- Hearts Animation -->
+    <div class="hearts-falling" id="heartsFalling"></div>
+    
+    <!-- Page 1: Love Message -->
+    <div class="page active" id="page1">
+        <div class="container">
+            <h1>To My Person 💖</h1>
+            
+            <div class="heart-separator">
+                ❤️
+            </div>
+            
+            <p class="intro-text">
+                Even with all these miles between us, I feel closer to you than ever. 
+                Every day with you has been special since November 2025, and I just wanted to remind you 
+                how much you mean to me.
+            </p>
+            
+            <div class="love-message">
+                <h3>What You Mean to Me</h3>
+                <p class="message-text">
+                    You're my favorite person to talk to, my favorite memory, and my favorite future.
+                    Distance is just a test to see how far love can travel.
+                </p>
+                <p class="message-text">
+                    Can't wait for all the simple things - holding your hand, hearing your laugh in person,
+                    and just being together.
+                </p>
+            </div>
+            
+            <h2>Things That Remind Me of Us</h2>
+            <p class="intro-text">
+                Every beautiful thing in nature makes me think of our connection.
+            </p>
+            
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Couple in nature">
+                    <div class="photo-caption">Exploring together, even in spirit</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Mountain landscape">
+                    <div class="photo-caption">Strong like mountains, beautiful like valleys</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Sunset beach">
+                    <div class="photo-caption">Dreaming of quiet moments together</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Starry night">
+                    <div class="photo-caption">Under the same sky, thinking of you</div>
+                </div>
+            </div>
+            
+            <div class="distance-section">
+                <div class="distance-icon">
+                    <i class="fas fa-heartbeat floating"></i>
+                </div>
+                <h3>Missing You is Hard</h3>
+                <p class="message-text">
+                    But knowing I have you makes it easier. Every conversation, every text, 
+                    every silly meme we share - it all adds up to something real.
+                </p>
+                <p class="message-text">
+                    And it's all worth it for you.
+                </p>
+            </div>
+            
+            <button class="nav-btn" id="nextPageBtn" style="margin: 20px auto; display: block; background: var(--gold);">
+                <i class="fas fa-arrow-right"></i> See Our Journey
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p>Made with honesty and affection for you</p>
+        </div>
+    </div>
+    
+    <!-- Page 2: Our Journey Since November 2025 -->
+    <div class="page" id="page2">
+        <div class="container">
+            <h1>Our Time Together 🌟</h1>
+            
+            <div class="heart-separator">
+                ✨
+            </div>
+            
+            <p class="intro-text">
+                Since November 2025, every day with you has been a gift. Here's a little look at 
+                what our time together means to me.
+            </p>
+            
+            <!-- Timeline of Memories -->
+            <h2>Our Journey Since 2025</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="fas fa-leaf"></i> November 2025
+                        </div>
+                        <p>When we started talking and I realized you were different. You felt like coming home.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="fas fa-snowflake"></i> December 2025
+                        </div>
+                        <p>Those cozy winter conversations that lasted for hours. You became my favorite part of every day.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="fas fa-fire"></i> January 2026
+                        </div>
+                        <p>Starting the new year knowing I had you. Even with distance, we were building something real.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="fas fa-heart"></i> February 2026
+                        </div>
+                        <p>Here we are - still choosing each other every day. My favorite consistency.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Section -->
+            <h2>By The Numbers</h2>
+            <p class="intro-text" style="font-size: 1.1rem;">
+                Just some fun stats about our time together since November 2025.
+            </p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="far fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-number" id="monthsTogether">4</div>
+                    <div class="stat-label">Months Together</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="far fa-sun"></i>
+                    </div>
+                    <div class="stat-number" id="daysTogether">120+</div>
+                    <div class="stat-label">Days of Us</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="far fa-moon"></i>
+                    </div>
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Late Night Talks</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="far fa-laugh-beam"></i>
+                    </div>
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Times You Made Me Smile</div>
+                </div>
+            </div>
+            
+            <!-- Patience and Waiting Section -->
+            <div class="patience-section">
+                <div class="patience-icon">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+                <h3>Good Things Take Time</h3>
+                <p class="message-text" style="color: #2e7d32;">
+                    We don't know exactly when we'll meet, and that's okay. 
+                    Some things can't be rushed. When the time is right, it will happen.
+                </p>
+                <p class="message-text" style="color: #2e7d32; margin-top: 15px;">
+                    Until then, I'll be here - appreciating every moment we have, 
+                    even if it's through a screen for now.
+                </p>
+            </div>
+            
+            <!-- Future Dreams Section -->
+            <h2>What I Dream About</h2>
+            <p class="intro-text" style="font-size: 1.1rem;">
+                Things I look forward to whenever that day comes...
+            </p>
+            
+            <div class="dreams-section">
+                <div class="dream-card">
+                    <div class="dream-icon">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <div class="dream-title">Morning Coffee</div>
+                    <p>Sharing a quiet morning together, just being in the same space</p>
+                </div>
+                
+                <div class="dream-card">
+                    <div class="dream-icon">
+                        <i class="fas fa-hiking"></i>
+                    </div>
+                    <div class="dream-title">Nature Walks</div>
+                    <p>Exploring beautiful places, hand in hand, no rush</p>
+                </div>
+                
+                <div class="dream-card">
+                    <div class="dream-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="dream-title">Movie Nights</div>
+                    <p>Actually watching something together without video lag</p>
+                </div>
+                
+                <div class="dream-card">
+                    <div class="dream-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="dream-title">Simple Meals</div>
+                    <p>Cooking together, even if it's just pasta</p>
+                </div>
+            </div>
+            
+            <!-- Natural Looking Message -->
+            <div class="natural-section">
+                <h3 style="text-align: left; color: var(--nature-green); margin-bottom: 15px;">
+                    <i class="fas fa-tree"></i> Honestly...
+                </h3>
+                <p class="natural-text">
+                    I'm not great with super romantic words, but here's the truth: 
+                    You make my days better. Even when we're apart, knowing you're out there 
+                    living your life and thinking of me sometimes - that matters.
+                </p>
+                <p class="natural-text" style="margin-top: 15px;">
+                    Valentine's Day 2026 is just a day, but what we have is every day. 
+                    I appreciate you, I miss you, and I'm really glad we found each other.
+                </p>
+                <p class="natural-text" style="margin-top: 15px; font-style: italic;">
+                    Whenever we meet, it'll be worth the wait. No countdown needed, 
+                    just the certainty that it'll happen when it's meant to.
+                </p>
+            </div>
+            
+            <!-- Looking Forward Section -->
+            <div class="love-message" style="background: linear-gradient(45deg, #ffb347, #ffcc33);">
+                <h3>In The Meantime</h3>
+                <p class="message-text">
+                    • I'll keep sending you stupid memes that remind me of you<br>
+                    • I'll be here for our late night talks<br>
+                    • I'll keep choosing you, every single day<br>
+                    • And I'll keep believing in us, no matter the distance
+                </p>
+            </div>
+            
+            <button class="nav-btn" id="prevPageBtn" style="margin: 20px auto; display: block; background: var(--nature-green); color: white;">
+                <i class="fas fa-arrow-left"></i> Back to Message
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p>Thanks for being my person since November 2025 💫</p>
+        </div>
+    </div>
+
+    <script>
+        // Create falling hearts
+        function createFallingHearts() {
+            const container = document.getElementById('heartsFalling');
+            const heartCount = 20;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-fall');
+                heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💫';
+                
+                // Random position and size
+                const left = Math.random() * 100;
+                const size = Math.random() * 12 + 8;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 5;
+                
+                heart.style.left = `${left}vw`;
+                heart.style.fontSize = `${size}px`;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // Page navigation
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page1Btn = document.getElementById('page1Btn');
+        const page2Btn = document.getElementById('page2Btn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        
+        function showPage(pageToShow) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            pageToShow.classList.add('active');
+            
+            // Change background based on page
+            if (pageToShow.id === 'page1') {
+                document.body.style.background = "linear-gradient(135deg, #ffc2d1, #ffafcc)";
+            } else {
+                document.body.style.background = "linear-gradient(135deg, #e0f7fa, #bbdefb)";
+            }
+        }
+        
+        // Event listeners for navigation
+        page1Btn.addEventListener('click', () => showPage(page1));
+        page2Btn.addEventListener('click', () => showPage(page2));
+        nextPageBtn.addEventListener('click', () => showPage(page2));
+        prevPageBtn.addEventListener('click', () => showPage(page1));
+        
+        // Calculate time together since November 2025
+        function calculateTimeTogether() {
+            // Relationship started November 15, 2025
+            const startDate = new Date('2025-11-15');
+            const today = new Date();
+            
+            // Calculate months (November 2025 to February 2026 = 4 months)
+            const months = 4; // Nov, Dec, Jan, Feb
+            
+            // Calculate days
+            const timeDiff = today - startDate;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('monthsTogether').textContent = months;
+            document.getElementById('daysTogether').textContent = `${days > 0 ? days : '120'}+`;
+        }
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            createFallingHearts();
+            calculateTimeTogether();
+            
+            // Add floating animation to some elements
+            const elementsToFloat = document.querySelectorAll('.stat-box, .timeline-content, .dream-card');
+            elementsToFloat.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+        
+        // Simple click effect
+        document.addEventListener('click', function(e) {
+            // Don't create hearts when clicking buttons
+            if (e.target.classList.contains('nav-btn') || 
+                e.target.closest('.nav-btn')) return;
+            
+            // Only create hearts 30% of the time for subtlety
+            if (Math.random() > 0.7) {
+                const symbols = ['❤️', '💫', '✨', '🌸'];
+                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                const element = document.createElement('div');
+                element.innerHTML = symbol;
+                element.style.position = 'fixed';
+                element.style.left = `${e.clientX - 15}px`;
+                element.style.top = `${e.clientY - 15}px`;
+                element.style.fontSize = '24px';
+                element.style.color = symbol === '❤️' ? 'var(--primary-pink)' : 
+                                    symbol === '🌸' ? '#ff66b2' : '#ffcc00';
+                element.style.pointerEvents = 'none';
+                element.style.zIndex = '1000';
+                element.style.opacity = '0.8';
+                element.style.transition = 'all 0.5s ease';
+                
+                document.body.appendChild(element);
+                
+                // Animate
+                setTimeout(() => {
+                    element.style.transform = 'translateY(-20px) scale(1.3)';
+                    element.style.opacity = '0';
+                }, 10);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    element.remove();
+                }, 600);
+            }
+        });
+    </script>
+</body>
+</html>
